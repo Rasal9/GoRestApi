@@ -1,4 +1,4 @@
-module rest
+module rest-api
 
 go 1.23
 
