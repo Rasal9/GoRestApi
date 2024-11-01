@@ -12,7 +12,7 @@ import (
 	"gorm.io/gorm"
 )
 
-var jwtKey = []byte("secret_key")
+var jwtKey = []byte("HS256")
 
 type Credentials struct {
 	Username string `json:"username"`

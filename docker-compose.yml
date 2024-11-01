@@ -33,6 +33,18 @@ services:
     ports:
       - "8080:8080"
 
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin_container
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@example.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "8081:80"
+    networks:
+      - app_network
+
 networks:
   app_network:
     driver: bridge

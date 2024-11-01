@@ -1,5 +1,10 @@
 Запуск: docker-compose up --build
 
+Подключение к базе данных:
+    localhost:8081
+        username: admin@example.com
+        password: admin
+    
 /cmd: Главная точка входа в приложение, где происходит загрузка конфигурации и запуск сервера.
 
 /config: Конфигурации приложения (файлы env)

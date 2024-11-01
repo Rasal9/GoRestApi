@@ -10,7 +10,7 @@ import (
 	"github.com/dgrijalva/jwt-go"
 )
 
-var jwtKey = []byte("secret_key")
+var jwtKey = []byte("HS256")
 
 func LoginHandler(w http.ResponseWriter, r *http.Request) {
 	var creds models.Credentials

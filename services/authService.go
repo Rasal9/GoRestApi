@@ -2,9 +2,13 @@ package services
 
 import (
 	"errors"
+	"fmt"
+	"log"
 
 	"rest-api/config"
 	"rest-api/models"
+
+	"golang.org/x/crypto/bcrypt"
 )
 
 func CreateUser(creds models.Credentials) (models.User, error) {
@@ -14,11 +18,16 @@ func CreateUser(creds models.Credentials) (models.User, error) {
 		return models.User{}, errors.New("пользователь с таким именем уже существует")
 	}
 
-	hashedPassword := hashPassword(creds.Password)
+	hashedPassword, err := hashPassword(creds.Password)
+	if err != nil {
+		return models.User{}, fmt.Errorf("ошибка хеширования пароля: %w", err)
+	}
 	user := models.User{
 		Username: creds.Username,
 		Password: hashedPassword,
 	}
+
+	log.Printf("Создан хеш пароля: %s", hashedPassword)
 
 	result = config.DB.Create(&user)
 	if result.Error != nil {
@@ -50,6 +59,10 @@ func DeleteUser(username string) error {
 	return nil
 }
 
-func hashPassword(password string) string {
-	return password
+func hashPassword(password string) (string, error) {
+	hash, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
+	if err != nil {
+		return "", fmt.Errorf("ошибка хеширования пароля: %w", err)
+	}
+	return string(hash), nil
 }

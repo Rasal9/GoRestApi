@@ -7,7 +7,7 @@ import (
 	"github.com/dgrijalva/jwt-go"
 )
 
-var jwtKey = []byte("secret_key")
+var jwtKey = []byte("HS256")
 
 func GenerateJWT(username string) (string, time.Time, error) {
 	expirationTime := time.Now().Add(15 * time.Minute)
