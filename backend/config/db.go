@@ -9,6 +9,12 @@ import (
 
 var DB *gorm.DB
 
+type User struct {
+	ID       uint   `gorm:"primaryKey"`
+	Username string `gorm:"unique;not null"`
+	Password string `gorm:"not null"`
+}
+
 func InitDB() {
 	var err error
 
@@ -17,4 +23,11 @@ func InitDB() {
 	if err != nil {
 		log.Fatalf("failed to initialize database, got error %v", err)
 	}
+
+	err = DB.AutoMigrate(&User{})
+	if err != nil {
+		log.Fatalf("failed to migrate database, got error %v", err)
+	}
+
+	log.Println("Database connection and migration successful")
 }
